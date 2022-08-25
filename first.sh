@@ -10,8 +10,8 @@
 
 MODE=$1 # stable beta
 
-BRANCH_BOBBY='dev'
-BRANCH_LEDE='dev'
+BRANCH_BOBBY='beta'
+BRANCH_LEDE='beta'
 
 if [ "$MODE" == "stable" ]; then
     BRANCH_BOBBY='main'
