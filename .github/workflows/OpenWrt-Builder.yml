@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "mode(stable|dev|beta)"
+        description: "mode(stable|beta)"
         required: true
         default: "beta"
 
