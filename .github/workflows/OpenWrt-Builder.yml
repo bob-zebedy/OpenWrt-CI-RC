@@ -6,22 +6,22 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "mode(stable|beta)"
+        description: "Mode(stable|beta)"
         required: true
         default: "beta"
 
-      commit_hash:
-        description: "commit hash"
+      commit_sha:
+        description: "Commit SHA"
         required: false
         default: ""
 
       kernel:
-        description: "kernel"
+        description: "Kernel"
         required: false
         default: ""
 
       remark:
-        description: "remark"
+        description: "Remark"
         required: false
         default: "manually"
 
@@ -78,8 +78,8 @@ jobs:
           fi
           ln -sf /workdir/openwrt ${GITHUB_WORKSPACE}/openwrt
           cd openwrt
-          if [ -n "${{ github.event.inputs.commit_hash }}" ]; then 
-            git reset --hard ${{ github.event.inputs.commit_hash }}
+          if [ -n "${{ github.event.inputs.commit_sha }}" ]; then 
+            git reset --hard ${{ github.event.inputs.commit_sha }}
           fi
           echo "COMMITHASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
