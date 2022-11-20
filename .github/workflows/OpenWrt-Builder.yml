@@ -164,7 +164,7 @@ jobs:
         if: success() && !cancelled()
         run: |
           echo "Start compile ${{ env.KERNEL }} ${{ github.event.inputs.mode }}"
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20deplives%2FOpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://blog.zebedy.com/images/avatar.jpg"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
           cd openwrt
           make -j$(nproc) || make -j1 V=sc
 
@@ -202,12 +202,12 @@ jobs:
       - name: Compile has succeeded
         if: success() && !cancelled()
         run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20deplives%2FOpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://blog.zebedy.com/images/avatar.jpg"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
       
       - name: Compile has failed
         if: failure() && !cancelled()
         run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20deplives%2FOpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://blog.zebedy.com/images/avatar.jpg"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
 
       - name: Prepare artifact
         if: failure() && !cancelled()
