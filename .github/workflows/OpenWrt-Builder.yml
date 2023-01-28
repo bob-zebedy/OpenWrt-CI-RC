@@ -173,9 +173,8 @@ jobs:
         run: |
           cd openwrt/bin/targets/*/*
           shopt -s extglob
-          rm -rf !(*.img|*.vmdk)
+          rm -rf !(*.img|*.vmdk|*.bin|sha256sums)
           shopt -u extglob
-          sha256sum * > sha256sum.txt
           cp /workdir/openwrt/.config $CONFIG
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
