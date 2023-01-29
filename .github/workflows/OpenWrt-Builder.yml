@@ -217,7 +217,7 @@ jobs:
 
       - name: Upload artifact
         if: failure() && !cancelled()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: openwrt_config
           path: ./artifact/
