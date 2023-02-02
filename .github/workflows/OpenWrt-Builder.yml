@@ -25,6 +25,11 @@ on:
         required: false
         default: "manually"
 
+      debug:
+        description: "Debug(debug|release)"
+        required: true
+        default: "release"
+
 env:
   REPO: https://github.com/deplives/lede.git
   CONFIG: x86.${{ github.event.inputs.mode }}.config
@@ -166,7 +171,11 @@ jobs:
           echo "Start compile ${{ env.KERNEL }} ${{ github.event.inputs.mode }}"
           curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
           cd openwrt
-          make -j$(nproc) || make -j1 V=sc
+          if [ ${{ github.event.inputs.debug }} = 'debug' ]; then
+            make -j1 V=sc
+          else
+            make -j$(nproc) || make -j1 V=sc
+          fi
 
       - name: Organize files
         if: success() && !cancelled()
