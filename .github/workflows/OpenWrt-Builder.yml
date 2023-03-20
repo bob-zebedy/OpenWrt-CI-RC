@@ -172,7 +172,7 @@ jobs:
           curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
           cd openwrt
           if [ ${{ github.event.inputs.debug }} = 'release' ]; then
-            make -j$(nproc) V=sc
+            make -j$(nproc)
           else
             make -j$(nproc) || make -j1 V=sc
           fi
