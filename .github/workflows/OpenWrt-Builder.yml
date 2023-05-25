@@ -160,7 +160,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
 
       - name: Cache
-        uses: deplives/cacheopenwrt@main
+        uses: deplives/cachewrt@main
         with:
           ccache: true
           prefix: ${{ github.workspace }}/openwrt
