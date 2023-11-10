@@ -32,9 +32,9 @@ echo 'Modify default theme...'
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # Modify default luci-theme-argon
-# https://github.com/jerrykuku/luci-theme-argon
+# https://github.com/deplives/luci-theme-argon
 echo 'Modify default luci-theme-argon...'
-rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/jerrykuku/luci-theme-argon.git feeds/luci/themes/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/deplives/luci-theme-argon feeds/luci/themes/luci-theme-argon
 
 # Modify default luci-proto-wireguard
 # https://github.com/deplives/luci-proto-wireguard
