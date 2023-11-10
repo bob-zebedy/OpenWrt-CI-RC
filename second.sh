@@ -31,6 +31,11 @@ sed -i 's/192.168.1.1/192.168.50.1/g' package/base-files/files/bin/config_genera
 echo 'Modify default theme...'
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
+# Modify default luci-theme-argon
+# https://github.com/jerrykuku/luci-theme-argon
+echo 'Modify default luci-theme-argon...'
+rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/jerrykuku/luci-theme-argon.git feeds/luci/themes/luci-theme-argon
+
 # Modify default luci-proto-wireguard
 # https://github.com/deplives/luci-proto-wireguard
 echo 'Modify default luci-proto-wireguard...'
