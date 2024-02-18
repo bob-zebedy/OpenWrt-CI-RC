@@ -46,20 +46,46 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@main
         with:
           ref: main
           fetch-depth: 0
 
-      - name: Space cleanup
+      - name: Check server performance
         run: |
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* android*
-          sudo rm -rf /etc/apt/sources.list.d /usr/share/dotnet /usr/local/lib/android /etc/mysql /etc/php /opt/ghc
-          sudo -E apt-get -y autoremove --purge
-          sudo -E apt-get clean
-          docker rmi $(docker images -q)
-          df -hT $PWD
+          echo -e "已知CPU型号性能排序: 7763 > 8370C > 8272CL > 8171M > E5-2673"
+          echo "--------------------------CPU型号--------------------------"
+          echo -e "$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq | awk '{$1=$1; print}')"
+          echo "--------------------------内存信息--------------------------"
+          echo -e "$(sudo lshw -short -C memory | grep GiB)"
+          echo "--------------------------硬盘信息--------------------------"
+          echo -e "$(df -hT)"
+
+      - name: Space cleanup
+        if: success() && !cancelled()
+        run: |
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf /usr/local/.ghcup || true
+
+          sudo apt-get remove -y '^aspnetcore-.*'
+          sudo apt-get remove -y '^dotnet-.*' --fix-missing
+          sudo apt-get remove -y '^llvm-.*' --fix-missing
+          sudo apt-get remove -y 'php.*' --fix-missing
+          sudo apt-get remove -y '^mongodb-.*' --fix-missing
+          sudo apt-get remove -y '^mysql-.*' --fix-missing
+          sudo apt-get remove -y azure-cli google-chrome-stable firefox powershell mono-devel libgl1-mesa-dri --fix-missing
+          sudo apt-get remove -y google-cloud-sdk --fix-missing
+          sudo apt-get remove -y google-cloud-cli --fix-missing
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+
+          sudo docker image prune --all --force || true
+
+          sudo swapoff -a || true
+          sudo rm -f /mnt/swapfile || true
 
       - name: Install dependencies
         env:
@@ -71,6 +97,10 @@ jobs:
           sudo -E apt-get -y install $(curl -fsSL https://raw.githubusercontent.com/deplives/openwrt-rely/main/ubuntu)
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
+
+      - name: Show disk space
+        run: |
+          df -hT
 
       - name: Clone source code
         working-directory: /workdir
@@ -168,7 +198,7 @@ jobs:
       - name: Compile firmware
         if: success() && !cancelled()
         run: |
-          echo "Start compile ${{ env.KERNEL }} ${{ github.event.inputs.mode }}"
+          echo "开始编译: ${{ env.KERNEL }} ${{ github.event.inputs.mode }}"
           curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
           cd openwrt
           if [ ${{ github.event.inputs.debug }} = 'release' ]; then
@@ -176,6 +206,10 @@ jobs:
           else
             make -j$(nproc) || make -j1 V=sc
           fi
+
+      - name: Check space usage
+        if: success() && !cancelled()
+        run: df -hT
 
       - name: Organize files
         if: success() && !cancelled()
@@ -208,28 +242,28 @@ jobs:
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-      - name: Compile Succeeded
-        if: success() && !cancelled()
-        run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
-      
-      - name: Compile Failed
-        if: failure() && !cancelled()
-        run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
-
       - name: Prepare artifact
-        if: failure() && !cancelled()
+        if: success() && !cancelled()
         run: |
           mkdir -p artifact
           [ -e openwrt/.config ] && cp openwrt/.config artifact/x86.${{ github.event.inputs.mode }}.config
 
       - name: Upload artifact
-        if: failure() && !cancelled()
+        if: success() && !cancelled()
         uses: actions/upload-artifact@v3
         with:
           name: openwrt_config
           path: ./artifact/
+
+      - name: Compile Succeeded
+        if: success() && !cancelled()
+        run: |
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
+
+      - name: Compile Failed
+        if: failure() && !cancelled()
+        run: |
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
 
       - name: Remove workflow runs
         uses: Mattraks/delete-workflow-runs@main
