@@ -3,10 +3,6 @@
 name: OpenWrt Builder RC
 
 on:
-  repository_dispatch:
-    types:
-      - webhook
-
   workflow_dispatch:
     inputs:
       mode:
