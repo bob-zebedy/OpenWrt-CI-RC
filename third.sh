@@ -21,6 +21,7 @@ sed -i '/10.1.2.3/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/adm
 echo 'Delete rebind domain placeholder...'
 sed -i '/ihost.netflix.com/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/dhcp.lua
 
+# Add additional translations...
 echo 'Add i18n in base.po...'
 cat <<EOF >>feeds/luci/modules/luci-base/po/zh-cn/base.po
 
