@@ -2,7 +2,7 @@
 
 自用 x86 软路由 OpenWrt 测试固件
 
-![](https://img.shields.io/github/actions/workflow/status/deplives/OpenWrt-CI-RC/OpenWrt-Builder.yml?branch=main&label=%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91&style=flat-square)
+![](https://img.shields.io/github/actions/workflow/status/bob-zebedy/OpenWrt-CI-RC/OpenWrt-Builder.yml?branch=main&label=%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91&style=flat-square)
 
 ## 固件特点
 
@@ -21,11 +21,11 @@
 
 ## 替换插件
 
-- [ttyd](https://github.com/deplives/ttyd)
-- [luci-app-ttyd](https://github.com/deplives/luci-app-ttyd)
+- [ttyd](https://github.com/bob-zebedy/ttyd)
+- [luci-app-ttyd](https://github.com/bob-zebedy/luci-app-ttyd)
 
 ## 新增插件
 
-- [HelloWorld](https://github.com/deplives/helloworld)
-- [IPSec VPN](https://github.com/deplives/openwrt-package)
-- [阿里 DDNS](https://github.com/deplives/openwrt-package)
+- [HelloWorld](https://github.com/bob-zebedy/helloworld)
+- [IPSec VPN](https://github.com/bob-zebedy/openwrt-package)
+- [阿里 DDNS](https://github.com/bob-zebedy/openwrt-package)

@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/deplives/OpenWrt-CI-RC
+# https://github.com/bob-zebedy/OpenWrt-CI-RC
 
 # Run after update feeds
 
@@ -32,19 +32,24 @@ echo 'Modify default theme...'
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # Modify default luci-theme-argon
-# https://github.com/deplives/luci-theme-argon
+# https://github.com/bob-zebedy/luci-theme-argon
 echo 'Modify default luci-theme-argon...'
-rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/deplives/luci-theme-argon feeds/luci/themes/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/bob-zebedy/luci-theme-argon feeds/luci/themes/luci-theme-argon
 
 # Modify default luci-proto-wireguard
-# https://github.com/deplives/luci-proto-wireguard
+# https://github.com/bob-zebedy/luci-proto-wireguard
 echo 'Modify default luci-proto-wireguard...'
-rm -rf feeds/luci/protocols/luci-proto-wireguard && git clone https://github.com/deplives/luci-proto-wireguard.git feeds/luci/protocols/luci-proto-wireguard
+rm -rf feeds/luci/protocols/luci-proto-wireguard && git clone https://github.com/bob-zebedy/luci-proto-wireguard.git feeds/luci/protocols/luci-proto-wireguard
 
 # Modify default ttyd
-# https://github.com/deplives/ttyd
+# https://github.com/bob-zebedy/ttyd
 echo 'Modify default ttyd...'
-rm -rf feeds/packages/utils/ttyd && git clone https://github.com/deplives/ttyd.git feeds/packages/utils/ttyd
+rm -rf feeds/packages/utils/ttyd && git clone https://github.com/bob-zebedy/ttyd.git feeds/packages/utils/ttyd
+
+# Modify default gcc
+# https://github.com/bob-zebedy/openwrt-gcc
+echo 'Modify default gcc...'
+rm -rf feeds/packages/devel/gcc && git clone https://github.com/bob-zebedy/openwrt-gcc.git feeds/packages/devel/gcc
 
 # Modify zzz-default-settings
 echo 'Delete `sed -i 's#downloads.openwrt.org#mirrors.cloud.tencent.com/lede#g' /etc/opkg/distfeeds.conf`...'
@@ -100,7 +105,7 @@ echo "██║   ██║██╔═══╝ ██╔══╝  ██║�
 echo "╚██████╔╝██║     ███████╗██║ ╚████║╚███╔███╔╝██║  ██║   ██║    " >>package/base-files/files/etc/banner
 echo " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    " >>package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >>package/base-files/files/etc/banner
-echo " %D %C ${build_date} $MODE @Bobby                              " >>package/base-files/files/etc/banner
+echo " %D %C ${build_date} $MODE @Zebedy                             " >>package/base-files/files/etc/banner
 echo " $COMMIT_SHA                                                   " >>package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >>package/base-files/files/etc/banner
 echo "                                                               " >>package/base-files/files/etc/banner

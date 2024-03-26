@@ -1,4 +1,4 @@
-# https://github.com/deplives/OpenWrt-CI-RC
+# https://github.com/bob-zebedy/OpenWrt-CI-RC
 
 name: OpenWrt Builder RC
 
@@ -31,7 +31,7 @@ on:
         default: "release"
 
 env:
-  REPO: https://github.com/deplives/lede.git
+  REPO: https://github.com/bob-zebedy/lede.git
   CONFIG: x86.${{ github.event.inputs.mode }}.config
   FIRST_SH: first.sh
   SECOND_SH: second.sh
@@ -94,7 +94,7 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TIMEZONE"
           sudo -E apt-get update
-          sudo -E apt-get -y install $(curl -fsSL https://raw.githubusercontent.com/deplives/openwrt-rely/main/ubuntu)
+          sudo -E apt-get -y install $(curl -fsSL https://raw.githubusercontent.com/bob-zebedy/openwrt-rely/main/ubuntu)
           sudo mkdir -p /mnt/workdir
           sudo chown $USER:$GROUPS /mnt/workdir
 
@@ -190,7 +190,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
 
       - name: Cache
-        uses: deplives/cachewrt@main
+        uses: bob-zebedy/cachewrt@main
         with:
           ccache: true
           prefix: /mnt/workdir/openwrt
@@ -199,7 +199,7 @@ jobs:
         if: success() && !cancelled()
         run: |
           echo "开始编译: ${{ env.KERNEL }} ${{ github.event.inputs.mode }}"
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20开始编译(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/bob-zebedy/Images/main/OpenWrt.png"
           cd openwrt
           if [ ${{ github.event.inputs.debug }} = 'release' ]; then
             make -j$(nproc)
@@ -258,12 +258,12 @@ jobs:
       - name: Compile Succeeded
         if: success() && !cancelled()
         run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译成功(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/bob-zebedy/Images/main/OpenWrt.png"
 
       - name: Compile Failed
         if: failure() && !cancelled()
         run: |
-          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/deplives/Images/main/OpenWrt.png"
+          curl -s "${{ secrets.BARK_URL }}/GitHub%20Action/仓库:%20OpenWrt-CI-RC%0a状态:%20编译失败(${{ env.KERNEL }} ${{ github.event.inputs.mode }})?group=OpenWrt&icon=https://raw.githubusercontent.com/bob-zebedy/Images/main/OpenWrt.png"
 
       - name: Remove workflow runs
         uses: Mattraks/delete-workflow-runs@main

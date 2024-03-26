@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/deplives/OpenWrt-CI-RC
+# https://github.com/bob-zebedy/OpenWrt-CI-RC
 
 # Run after install feeds
 
