@@ -31,6 +31,12 @@ msgstr "编译版本"
 msgid "Build Date"
 msgstr "编译日期"
 
+msgid "try"
+msgstr "尝试"
+
+msgid "force"
+msgstr "强制"
+
 msgid "Do not send a Release when restarting"
 msgstr "重启后前缀不释放"
 
