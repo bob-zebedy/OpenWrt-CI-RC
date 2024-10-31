@@ -25,7 +25,7 @@ echo 'Replace https://github.com/coolsnowwolf/packages'
 sed -i "s/https:\/\/github.com\/coolsnowwolf\/packages/https:\/\/github.com\/bob-zebedy\/packages;$BRANCH_LEDE/g" feeds.conf.default
 
 echo 'Replace https://github.com/coolsnowwolf/luci'
-sed -i "s/https:\/\/github.com\/coolsnowwolf\/luci/https:\/\/github.com\/bob-zebedy\/luci;$BRANCH_LEDE/g" feeds.conf.default
+sed -i "s/https:\/\/github.com\/coolsnowwolf\/luci/https:\/\/github.com\/bob-zebedy\/luci/g" feeds.conf.default
 
 echo 'Add helloworld feed...'
 sed -i "$ a src-git helloworld https://github.com/bob-zebedy/helloworld;$BRANCH_BOBBY" feeds.conf.default

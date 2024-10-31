@@ -36,11 +36,6 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 echo 'Modify default luci-theme-argon...'
 rm -rf feeds/luci/themes/luci-theme-argon && git clone https://github.com/bob-zebedy/luci-theme-argon feeds/luci/themes/luci-theme-argon
 
-# Modify default luci-proto-wireguard
-# https://github.com/bob-zebedy/luci-proto-wireguard
-echo 'Modify default luci-proto-wireguard...'
-rm -rf feeds/luci/protocols/luci-proto-wireguard && git clone https://github.com/bob-zebedy/luci-proto-wireguard.git feeds/luci/protocols/luci-proto-wireguard
-
 # Modify default ttyd
 # https://github.com/bob-zebedy/ttyd
 echo 'Modify default ttyd...'

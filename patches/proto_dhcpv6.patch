@@ -1,13 +1,15 @@
---- a/feeds/luci/protocols/luci-proto-ipv6/luasrc/model/cbi/admin_network/proto_dhcpv6.lua	2024-07-09 14:01:13.669941987 +0800
-+++ b/feeds/luci/protocols/luci-proto-ipv6/luasrc/model/cbi/admin_network/proto_dhcpv6.lua	2024-07-09 14:00:59.146876330 +0800
-@@ -6,9 +6,9 @@
- 
- local o = section:taboption("general", ListValue, "reqaddress",
- 	translate("Request IPv6-address"))
--o:value("try")
--o:value("force")
--o:value("none", "disabled")
-+o:value("try", translate("try"))
-+o:value("force", translate("force"))
-+o:value("none", translate("disabled"))
- o.default = "try"
+--- a/feeds/luci/protocols/luci-proto-ipv6/htdocs/luci-static/resources/protocol/dhcpv6.js	2024-10-28 10:23:19.061942973 +0800
++++ b/feeds/luci/protocols/luci-proto-ipv6/htdocs/luci-static/resources/protocol/dhcpv6.js	2024-10-28 10:30:21.041059401 +0800
+@@ -15,9 +15,9 @@
+ 		var o;
+
+ 		o = s.taboption('general', form.ListValue, 'reqaddress', _('Request IPv6-address'));
+-		o.value('try');
+-		o.value('force');
+-		o.value('none', 'disabled');
++		o.value('try', _('try'));
++		o.value('force', _('force'));
++		o.value('none', _('disabled'));
+ 		o.default = 'try';
+
+ 		o = s.taboption('general', form.Value, 'reqprefix', _('Request IPv6-prefix of length'));
